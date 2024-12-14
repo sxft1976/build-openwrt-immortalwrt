@@ -186,6 +186,6 @@ jobs:
       - name: 上传固件目录
         uses: actions/upload-artifact@main
         with:
-          name: openwrt_immortalwrt${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+          name: op_im${{ inputs.source_branch }}${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: ${{ env.FIRMWARE }}
   
