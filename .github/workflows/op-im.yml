@@ -12,13 +12,13 @@ on:
       source_branch:
         description: "Select the source branch"
         required: false
-        default: "openwrt-24.10"
+        default: "openwrt_24.10"
         type: choice
         options:
-          - openwrt-main
-          - openwrt-24.10
-          - immortalwrt-master
-          - immortalwrt-24.10
+          - openwrt_main
+          - openwrt_24.10
+          - immortalwrt_master
+          - immortalwrt_24.10
       
 env:
   FEEDS_CONF: openwrt-immortalwrt/${{ inputs.source_branch }}/feeds.conf.default
@@ -87,7 +87,7 @@ jobs:
               REPO_URL="https://github.com/openwrt/openwrt"
               REPO_BRANCH="main"
               TAGS_NAME="openwrt"
-          elif [[ "${{ inputs.source_branch }}" == *"openwrt-24.10"* ]]; then
+          elif [[ "${{ inputs.source_branch }}" == *"openwrt_24.10"* ]]; then
               REPO_URL="https://github.com/openwrt/openwrt"
               REPO_BRANCH="openwrt-24.10"
               TAGS_NAME="op-24.10"
@@ -95,7 +95,7 @@ jobs:
               REPO_URL="https://github.com/immortalwrt/immortalwrt"
               REPO_BRANCH="master"
               TAGS_NAME="immortalwrt"
-          elif [[ "${{ inputs.source_branch }}" == *"immortalwrt-24.10"* ]]; then
+          elif [[ "${{ inputs.source_branch }}" == *"immortalwrt_24.10"* ]]; then
               REPO_URL="https://github.com/immortalwrt/immortalwrtt"
               REPO_BRANCH="openwrt-24.10"
               TAGS_NAME="im-24.10"
