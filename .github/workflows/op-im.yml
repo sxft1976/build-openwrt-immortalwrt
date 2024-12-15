@@ -25,7 +25,7 @@ env:
   CONFIG_FILE: openwrt-immortalwrt/${{ inputs.source_branch }}/config
   DIY_P1_SH: openwrt-immortalwrt/${{ inputs.source_branch }}/diy-part1.sh
   DIY_P2_SH: openwrt-immortalwrt/${{ inputs.source_branch }}/diy-part2.sh
-  FILES: openwrt-immortalwrt/${{ inputs.source_branch }}/files
+  FILES: openwrt-immortalwrt/${{ inputs.source_branch }}/files1
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: false
