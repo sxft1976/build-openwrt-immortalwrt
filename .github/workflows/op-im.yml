@@ -183,6 +183,6 @@ jobs:
       - name: 上传固件目录
         uses: actions/upload-artifact@main
         with:
-          name: op_im${{ inputs.source_branch }}${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+          name: ${{ inputs.source_branch }}${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: ${{ env.FIRMWARE }}
   
