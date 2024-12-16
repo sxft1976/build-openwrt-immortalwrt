@@ -65,6 +65,10 @@ rm -rf package/helloworld/mihomo
 # luci-app-daed
 git clone https://github.com/QiuSimons/luci-app-daed package/dae
 #merge_package v5 https://github.com/sbwml/openwrt_helloworld package/dae luci-app-daed daed
+# 依赖
+#merge_package main https://github.com/kenzok8/small-package package/helloworld libcron
+merge_package master https://github.com/immortalwrt/packages package/libs libs/libcron
+#mkdir -p Package/libcron && wget -O Package/libcron/Makefile https://raw.githubusercontent.com/immortalwrt/packages/refs/heads/master/libs/libcron/Makefile
 
 # luci-app-mihomo
 merge_package main https://github.com/morytyann/OpenWrt-mihomo package/helloworld luci-app-mihomo
