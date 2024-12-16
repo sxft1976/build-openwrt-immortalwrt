@@ -15,6 +15,7 @@ on:
         default: "openwrt_24.10"
         type: choice
         options:
+          - openwrt_daed
           - openwrt_main
           - openwrt_24.10
           - immortalwrt_master
@@ -83,7 +84,11 @@ jobs:
         if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
         run: |
           # 设置编译源代码
-          if [[ "${{ inputs.source_branch }}" == *"openwrt"* ]]; then
+          if [[ "${{ inputs.source_branch }}" == *"openwrt_daed"* ]]; then
+              REPO_URL="https://github.com/openwrt/openwrt"
+              REPO_BRANCH="openwrt-24.10"
+              TAGS_NAME="openwrt_daed"
+          elif [[ "${{ inputs.source_branch }}" == *"openwrt"* ]]; then
               REPO_URL="https://github.com/openwrt/openwrt"
               REPO_BRANCH="main"
               TAGS_NAME="openwrt"
