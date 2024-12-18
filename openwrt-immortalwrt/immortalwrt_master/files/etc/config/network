@@ -11,6 +11,8 @@ config globals 'globals'
 config device
 	option name 'br-lan'
 	option type 'bridge'
+	option ipv6 '0'
+	list ports 'eth0'
 
 config interface 'lan'
 	option device 'eth0'
