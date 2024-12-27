@@ -23,7 +23,7 @@ on:
       
 env:
   FEEDS_CONF: openwrt-immortalwrt/${{ inputs.source_branch }}/feeds.conf.default
-  CONFIG_FILE: openwrt-immortalwrt/${{ inputs.source_branch }}/x86.config
+  CONFIG_FILE: openwrt-immortalwrt/${{ inputs.source_branch }}/config
   DIY_P1_SH: openwrt-immortalwrt/${{ inputs.source_branch }}/diy-part1.sh
   DIY_P2_SH: openwrt-immortalwrt/${{ inputs.source_branch }}/diy-part2.sh
   FILES: openwrt-immortalwrt/${{ inputs.source_branch }}/files
@@ -150,7 +150,6 @@ jobs:
           [[ -e "${CONFIG_FILE}" ]] && cp -f ${CONFIG_FILE} openwrt/.config
           chmod +x ${DIY_P2_SH}
           cd openwrt/
-          cat ./.config
           ${GITHUB_WORKSPACE}/${DIY_P2_SH}
 
       - name: 下载软件包
