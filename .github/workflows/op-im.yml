@@ -41,18 +41,16 @@ jobs:
         uses: actions/checkout@main
 
       - name: 释放磁盘空间
-        uses: jlumbroso/free-disk-space@main
-        with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
-          tool-cache: true
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          swap-storage: truee
+        uses: easimon/maximize-build-space@master
+        with: 
+          root-reserve-mb: 6144
+          swap-size-mb: 10240
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
+          build-mount-path: '/workdir'
         
       - name: 初始化环境
         id: init
