@@ -51,6 +51,9 @@ jobs:
           remove-codeql: 'true'
           remove-docker-images: 'true'
           build-mount-path: '/workdir'
+
+      - name: Checkout
+        uses: actions/checkout@main
         
       - name: 初始化环境
         id: init
@@ -136,6 +139,21 @@ jobs:
           chmod +x ${DIY_P2_SH}
           cd openwrt/
           ${GITHUB_WORKSPACE}/${DIY_P2_SH}
+
+      - name: Get architecture
+        working-directory: ${{ github.workspace }}/openwrt
+        run: |
+         TARGET_DEVICE_ARCH="$(grep "^CONFIG_TARGET_.*=y$" ".config" | head -n 1 | sed 's/^CONFIG_TARGET_//g' | sed 's/=y//g'| awk -F '_' '{print $1}')"
+         echo "TARGET_DEVICE_ARCH=${T 
+      - name: cache
+        uses: stupidloud/cachewrtbuild@main
+        with:
+          ccache: 'true'
+          mixkey: ${{ env.MIXKEY }}
+          skip: 'true'
+          toolchain: 'true'
+          clean: 'false'
+          prefix: ${{ github.workspace }}/openwrt
 
       - name: 下载软件包
         id: package
