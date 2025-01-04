@@ -12,7 +12,7 @@ on:
       source_branch:
         description: "Select the source branch"
         required: false
-        default: "immortalwrt_24.10"
+        default: "openwrt_24.10"
         type: choice
         options:
           - openwrt_daed
@@ -27,7 +27,6 @@ env:
   DIY_P1_SH: openwrt-immortalwrt/${{ inputs.source_branch }}/diy-part1.sh
   DIY_P2_SH: openwrt-immortalwrt/${{ inputs.source_branch }}/diy-part2.sh
   FILES: openwrt-immortalwrt/${{ inputs.source_branch }}/files
-  RELEASE_TAG: immortalwrt-X86
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: false
@@ -35,9 +34,12 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     steps:
+      - name: 准备结束
+        uses: actions/checkout@main
+
       - name: 释放磁盘空间
         uses: easimon/maximize-build-space@master
         with: 
@@ -49,7 +51,7 @@ jobs:
           remove-codeql: 'true'
           remove-docker-images: 'true'
           build-mount-path: '/workdir'
-          
+        
       - name: 初始化环境
         id: init
         env:
@@ -184,37 +186,4 @@ jobs:
         with:
           name: ${{ inputs.source_branch }}${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: ${{ env.FIRMWARE }}
-          
-      - name: Generate release tag
-        id: tag
-        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        run: |
-          echo "release_tag=$RELEASE_TAG-$REPO_BRANCH-$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
-          touch release.txt
-          [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
-          echo "status=success" >> $GITHUB_OUTPUT
-
-      - name: Upload firmware to release
-        uses: softprops/action-gh-release@v2
-        if: steps.tag.outputs.status == 'success' && !cancelled()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.tag.outputs.release_tag }}
-          body_path: release.txt
-          files: ${{ env.FIRMWARE }}/*
-
-      - name: Delete workflow runs
-        uses: Mattraks/delete-workflow-runs@main
-        with:
-          retain_days: 0
-          keep_minimum_runs: 2
-
-      - name: Remove old Releases
-        uses: dev-drprasad/delete-older-releases@master
-        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        with:
-          keep_latest: 3
-          delete_tags: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
