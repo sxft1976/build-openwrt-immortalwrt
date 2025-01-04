@@ -50,9 +50,6 @@ jobs:
           remove-docker-images: 'true'
           build-mount-path: '/workdir'
           
-      - name: Checkout
-        uses: actions/checkout@main
-        
       - name: 初始化环境
         id: init
         env:
@@ -134,9 +131,8 @@ jobs:
         run: |
           [[ -d "${FILES}" ]] && mv -f ${FILES} openwrt/files
           [[ -e "${CONFIG_FILE}" ]] && cp -f ${CONFIG_FILE} openwrt/.config
-          chmod +x ${DIY_P2_SH}          
+          chmod +x ${DIY_P2_SH}
           cd openwrt/
-          cat ./.config
           ${GITHUB_WORKSPACE}/${DIY_P2_SH}
 
       - name: 下载软件包
