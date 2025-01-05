@@ -12,7 +12,7 @@ on:
       source_branch:
         description: "Select the source branch"
         required: false
-        default: "openwrt_24.10"
+        default: "immortalwrt_24.10"
         type: choice
         options:
           - openwrt_daed
