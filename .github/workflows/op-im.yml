@@ -214,7 +214,7 @@ jobs:
           name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: ${{ env.FIRMWARE }}
           
-      - name: Generate release tag
+      - name: 生成发布版标题
         id: tag
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
         run: |
@@ -223,7 +223,7 @@ jobs:
          [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
          echo "status=success" >> $GITHUB_OUTPUT
 
-      - name: Upload firmware to release
+      - name: 上传发布版固件
         uses: softprops/action-gh-release@v2
         if: steps.tag.outputs.status == 'success' && !cancelled()
         env:
@@ -233,13 +233,13 @@ jobs:
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
 
-      - name: Delete workflow runs
+      - name: 删除编译记录
         uses: Mattraks/delete-workflow-runs@main
         with:
          retain_days: 0
          keep_minimum_runs: 2
 
-      - name: Remove old Releases
+      - name: 移除旧版
         uses: dev-drprasad/delete-older-releases@master
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
         with:
