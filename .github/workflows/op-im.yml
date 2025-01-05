@@ -54,7 +54,7 @@ jobs:
           remove-docker-images: 'true'
           build-mount-path: '/workdir'
 
-      - name: Checkout
+      - name: 检查
         uses: actions/checkout@main
         
       - name: 初始化环境
@@ -142,14 +142,14 @@ jobs:
           cd openwrt/
           ${GITHUB_WORKSPACE}/${DIY_P2_SH}
 
-      - name: Get architecture
+      - name: 获取结构
         working-directory: ${{ github.workspace }}/openwrt
         run: |
          TARGET_DEVICE_ARCH="$(grep "^CONFIG_TARGET_.*=y$" ".config" | head -n 1 | sed 's/^CONFIG_TARGET_//g' | sed 's/=y//g'| awk -F '_' '{print $1}')"
          echo "TARGET_DEVICE_ARCH=${TARGET_DEVICE_ARCH}" >>$GITHUB_ENV
          echo "MIXKEY=X86_64" >>$GITHUB_ENV 
          
-      - name: cache
+      - name: 获取缓存
         uses: stupidloud/cachewrtbuild@main
         with:
           ccache: 'true'
@@ -223,7 +223,7 @@ jobs:
          [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
          echo "status=success" >> $GITHUB_OUTPUT
 
-      - name: 上传发布版固件
+      - name: 上传发布固件
         uses: softprops/action-gh-release@v2
         if: steps.tag.outputs.status == 'success' && !cancelled()
         env:
