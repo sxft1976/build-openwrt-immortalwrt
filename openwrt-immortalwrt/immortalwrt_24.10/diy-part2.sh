@@ -221,69 +221,6 @@ patch -p1 < package-patch/clang/macremapper/100-macremapper-fix-clang-build.patc
 rm -rf feeds/packages/net/coova-chilli
 git clone https://$github/sbwml/kmod_packages_net_coova-chilli feeds/packages/net/coova-chilli
 
-# 删除patch
-rm -rf package-patch
-rm -rf ./package/custom_packages
-mkdir -p ./package/custom_packages
-
-# Add Theme
-rm -rf ./feeds/luci/themes/luci-theme-argon
-git clone https://github.com/jerrykuku/luci-theme-argon.git ./package/custom_packages/luci-theme-argon
-
-rm -rf ./feeds/luci/applications/luci-app-argon-config
-git clone https://github.com/jerrykuku/luci-app-argon-config.git ./package/custom_packages/luci-app-argon-config
-
-# adguardhome
-# rm -rf ./package/lean/luci-app-adguardhome
-git clone https://github.com/rufengsuixing/luci-app-adguardhome.git ./package/custom_packages/luci-app-adguardhome
-
-# homeproxy incloude luci pakcage
-# git clone https://github.com/immortalwrt/homeproxy.git ./package/custom_packages/homeproxy
-
-# mosdns
-
-# find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
-# find ./ | grep Makefile | grep mosdns | xargs rm -f
-rm -rf ./feeds/luci/applications/luci-app-mosdns/
-rm -rf ./feeds/packages/net/mosdns/
-# rm -rf feeds/packages/net/v2ray-geodata/
-git clone https://github.com/sbwml/luci-app-mosdns -b v5 ./package/custom_packages/mosdns
-# git clone https://github.com/sbwml/v2ray-geodata ./package/custom_packages/v2ray-geodata
-
-# git clone https://github.com/jerrykuku/lua-maxminddb.git
-# git clone https://github.com/jerrykuku/luci-app-vssr.git
-
-
-# Open App Filter
-# git clone https://github.com/destan19/OpenAppFilter.git ./package/custom_packages/luci-app-openappfilter
-
-# Speedtest
-git clone https://github.com/sirpdboy/netspeedtest.git ./package/custom_packages/netspeedtest
-
-
-# delete immortalwrt passwall packages
-rm -rf ./feeds/packages/net/brook
-rm -rf ./feeds/packages/net/chinadns-ng
-rm -rf ./feeds/packages/net/dns2socks
-rm -rf ./feeds/packages/net/dns2tcp
-rm -rf ./feeds/packages/net/geoview
-rm -rf ./feeds/packages/net/hysteria
-rm -rf ./feeds/packages/net/ipt2socks
-rm -rf ./feeds/packages/net/microsocks
-rm -rf ./feeds/packages/net/naiveproxy
-rm -rf ./feeds/packages/net/shadowsocks-rust
-rm -rf ./feeds/packages/net/simple-obfs
-rm -rf ./feeds/packages/net/sing-box
-rm -rf ./feeds/packages/net/tcping
-rm -rf ./feeds/packages/net/trojan
-rm -rf ./feeds/packages/net/trojan-go
-rm -rf ./feeds/packages/net/trojan-plus
-rm -rf ./feeds/packages/net/tuic-client
-rm -rf ./feeds/packages/net/v2ray-core
-rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/packages/net/v2ray-plugin
-rm -rf ./feeds/packages/net/xray-core
-rm -rf ./feeds/packages/net/xray-plugin
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
