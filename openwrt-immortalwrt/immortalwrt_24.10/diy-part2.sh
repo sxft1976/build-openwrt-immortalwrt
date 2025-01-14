@@ -221,6 +221,9 @@ patch -p1 < package-patch/clang/macremapper/100-macremapper-fix-clang-build.patc
 rm -rf feeds/packages/net/coova-chilli
 git clone https://$github/sbwml/kmod_packages_net_coova-chilli feeds/packages/net/coova-chilli
 
+# 删除patch
+rm -rf package-patch
+
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
