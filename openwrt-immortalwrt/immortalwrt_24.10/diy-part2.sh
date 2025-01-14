@@ -52,14 +52,13 @@ echo "========================="
 
 # 修改密码
 sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:18775:0:99999:7:::/g' package/base-files/files/etc/shadow
+
 # 修复上移下移按钮翻译
 sed -i 's/<%:Up%>/<%:Move up%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
 sed -i 's/<%:Down%>/<%:Move down%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
 
 # 修复procps-ng-top导致首页cpu使用率无法获取
 sed -i 's#top -n1#\/bin\/busybox top -n1#g' feeds/luci/modules/luci-base/root/usr/share/rpcd/ucode/luci
-
-
 
 # ppp - 2.5.0
 rm -rf package/network/services/ppp
@@ -115,21 +114,21 @@ rm -rf feeds/luci/applications/{luci-app-homeproxy,luci-app-v2raya,luci-app-shad
 rm -rf feeds/packages/net/{v2raya,shadowsocks-libev}
 
 # 移除luci-app-passwall及核心
-# rm -rf feeds/luci/applications/luci-app-passwall
+rm -rf feeds/luci/applications/luci-app-passwall
 # 核心
-# rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs}
-# rm -rf feeds/packages/net/{sing-box,tcping,trojan-go,trojan-plus,trojan,tuic-client,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs}
+rm -rf feeds/packages/net/{sing-box,tcping,trojan-go,trojan-plus,trojan,tuic-client,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
 
 ## luci-app-passwall2
 #merge_package main https://github.com/xiaorouji/openwrt-passwall package luci-app-passwall
-##merge_package main https://github.com/xiaorouji/openwrt-passwall2 package luci-app-passwall2
+merge_package main https://github.com/xiaorouji/openwrt-passwall2 package luci-app-passwall2
 
 # 核心
-# git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
-# rm -rf package/passwall-packages/{chinadns-ng,dns2socks,dns2tcp,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box}
-# rm -rf package/passwall-packages/{tcping,trojan,trojan-plus,tuic-client,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
-# merge_package v5 https://github.com/sbwml/openwrt_helloworld  package/passwall-packages chinadns-ng dns2socks dns2tcp hysteria ipt2socks microsocks naiveproxy shadowsocks-rust shadowsocksr-libev simple-obfs sing-box
-# merge_package v5 https://github.com/sbwml/openwrt_helloworld  package/passwall-packages tcping trojan-plus trojan tuic-client v2ray-core v2ray-geodata v2ray-plugin xray-core xray-plugin
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
+rm -rf package/passwall-packages/{chinadns-ng,dns2socks,dns2tcp,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box}
+rm -rf package/passwall-packages/{tcping,trojan,trojan-plus,tuic-client,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
+merge_package v5 https://github.com/sbwml/openwrt_helloworld  package/passwall-packages chinadns-ng dns2socks dns2tcp hysteria ipt2socks microsocks naiveproxy shadowsocks-rust shadowsocksr-libev simple-obfs sing-box
+merge_package v5 https://github.com/sbwml/openwrt_helloworld  package/passwall-packages tcping trojan-plus trojan tuic-client v2ray-core v2ray-geodata v2ray-plugin xray-core xray-plugin
 
 # 修正部分从第三方仓库拉取的软件 Makefile 路径问题
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
@@ -225,74 +224,6 @@ git clone https://$github/sbwml/kmod_packages_net_coova-chilli feeds/packages/ne
 
 # 删除patch
 rm -rf package-patch
-
-
-rm -rf ./package/custom_packages
-mkdir -p ./package/custom_packages
-
-# Add Theme
-rm -rf ./feeds/luci/themes/luci-theme-argon
-git clone https://github.com/jerrykuku/luci-theme-argon.git ./package/custom_packages/luci-theme-argon
-
-rm -rf ./feeds/luci/applications/luci-app-argon-config
-git clone https://github.com/jerrykuku/luci-app-argon-config.git ./package/custom_packages/luci-app-argon-config
-
-# adguardhome
-# rm -rf ./package/lean/luci-app-adguardhome
-git clone https://github.com/rufengsuixing/luci-app-adguardhome.git ./package/custom_packages/luci-app-adguardhome
-
-# homeproxy incloude luci pakcage
-# git clone https://github.com/immortalwrt/homeproxy.git ./package/custom_packages/homeproxy
-
-# mosdns
-
-# find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
-# find ./ | grep Makefile | grep mosdns | xargs rm -f
-rm -rf ./feeds/luci/applications/luci-app-mosdns/
-rm -rf ./feeds/packages/net/mosdns/
-# rm -rf feeds/packages/net/v2ray-geodata/
-git clone https://github.com/sbwml/luci-app-mosdns -b v5 ./package/custom_packages/mosdns
-# git clone https://github.com/sbwml/v2ray-geodata ./package/custom_packages/v2ray-geodata
-
-# git clone https://github.com/jerrykuku/lua-maxminddb.git
-# git clone https://github.com/jerrykuku/luci-app-vssr.git
-
-
-# Open App Filter
-# git clone https://github.com/destan19/OpenAppFilter.git ./package/custom_packages/luci-app-openappfilter
-
-# Speedtest
-git clone https://github.com/sirpdboy/netspeedtest.git ./package/custom_packages/netspeedtest
-
-
-# delete immortalwrt passwall packages
-rm -rf ./feeds/packages/net/brook
-rm -rf ./feeds/packages/net/chinadns-ng
-rm -rf ./feeds/packages/net/dns2socks
-rm -rf ./feeds/packages/net/dns2tcp
-rm -rf ./feeds/packages/net/geoview
-rm -rf ./feeds/packages/net/hysteria
-rm -rf ./feeds/packages/net/ipt2socks
-rm -rf ./feeds/packages/net/microsocks
-rm -rf ./feeds/packages/net/naiveproxy
-rm -rf ./feeds/packages/net/shadowsocks-rust
-rm -rf ./feeds/packages/net/simple-obfs
-rm -rf ./feeds/packages/net/sing-box
-rm -rf ./feeds/packages/net/tcping
-rm -rf ./feeds/packages/net/trojan
-rm -rf ./feeds/packages/net/trojan-go
-rm -rf ./feeds/packages/net/trojan-plus
-rm -rf ./feeds/packages/net/tuic-client
-rm -rf ./feeds/packages/net/v2ray-core
-rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/packages/net/v2ray-plugin
-rm -rf ./feeds/packages/net/xray-core
-rm -rf ./feeds/packages/net/xray-plugin
-
-
-# smartdns
-# git clone https://github.com/pymumu/smartdns.git ./package/custom_packages/smartdns
-
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
