@@ -30,6 +30,7 @@ config dhcp 'lan'
 	list dhcp_option 'tag:!proxy,6,192.168.3.1'
 	option dns_service '0'
 	option ignore '1'
+        option dynamicdhcp '0'
 
 config dhcp 'wan'
 	option interface 'wan'
